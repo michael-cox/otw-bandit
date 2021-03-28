@@ -417,6 +417,7 @@ The password is <password>
 #### What sins are evidenced in this challenge
 * [CWE-200: Exposure of Sensitive Information to an Unauthorized Actor](https://cwe.mitre.org/data/definitions/200.html)
 * [CWE-313: Cleartext Storage in a File or on Disk](https://cwe.mitre.org/data/definitions/313.htm)
+* [CWE-732: Incorrect Permission Assignment for Critical Resource](https://cwe.mitre.org/data/definitions/732.html)
 
 #### How could those sins be mitigated
 * Securely store private keys with user permissions
@@ -550,6 +551,7 @@ Ix2a92Aq8dGCMOat95FYulOOx6MTHfEZ				Ix2a92Aq8dGCMOat95FYulOOx6MTHfEZ
 #### What sins are evidenced in this challenge
 * [CWE-200: Exposure of Sensitive Information to an Unauthorized Actor](https://cwe.mitre.org/data/definitions/200.html)
 * [CWE-313: Cleartext Storage in a File or on Disk](https://cwe.mitre.org/data/definitions/313.htm)
+* [CWE-732: Incorrect Permission Assignment for Critical Resource](https://cwe.mitre.org/data/definitions/732.html)
 
 #### How could those sins be mitigated
 * Do not store passwords in cleartext
@@ -569,6 +571,7 @@ Ix2a92Aq8dGCMOat95FYulOOx6MTHfEZ				Ix2a92Aq8dGCMOat95FYulOOx6MTHfEZ
 * [CWE-200: Exposure of Sensitive Information to an Unauthorized Actor](https://cwe.mitre.org/data/definitions/200.html)
 * [CWE-313: Cleartext Storage in a File or on Disk](https://cwe.mitre.org/data/definitions/313.htm)
 * [CWE-656: Reliance on Security Through Obscurity](https://cwe.mitre.org/data/definitions/656.html)
+* [CWE-732: Incorrect Permission Assignment for Critical Resource](https://cwe.mitre.org/data/definitions/732.html)
 
 #### How could those sins be mitigated
 * Do not store passwords in cleartext
@@ -724,10 +727,14 @@ bandit23@bandit:/tmp/test1254$ cat /tmp/badfile32
 ```
 
 #### What sins are evidenced in this challenge
-** Sins here **
+* [CWE-313: Cleartext Storage in a File or on Disk](https://cwe.mitre.org/data/definitions/313.htm)
+* [CWE-732: Incorrect Permission Assignment for Critical Resource](https://cwe.mitre.org/data/definitions/732.html)
+* [CWE-829: Inclusion of Functionality from Untrusted Control Sphere](https://cwe.mitre.org/data/definitions/829.html)
 
 #### How could those sins be mitigated
-** Mitigations here **
+* Do not implement arbitrary code execution
+* Assign strong permissions to sensitive directories
+* Securely hash passwords.
 
 
 
@@ -735,16 +742,31 @@ bandit23@bandit:/tmp/test1254$ cat /tmp/badfile32
 ### Bandit 25
 
 #### Credentials
-** Credentials here. Not the SSH key. **
+`bandit25:uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG`
 
 #### How you passed the challenge
-** Steps here **
+```sh
+bandit24@bandit:/tmp/mtest$ for i in {0000..9999}; do  
+> echo "<password> $i" >> input
+> done
+bandit24@bandit:/tmp/mtest$ cat file | nc localhost 30002 > output
+bandit24@bandit:/tmp/mtest$ grep -v Wrong output 
+I am the pincode checker for user bandit25. Please enter the password for user bandit24 and the secret pincode on a single line, separated by a space.
+Correct!
+The password of user bandit25 is <password>
+```
 
 #### What sins are evidenced in this challenge
-** Sins here **
+* [CWE-200: Exposure of Sensitive Information to an Unauthorized Actor](https://cwe.mitre.org/data/definitions/200.html)
+* [CWE-307: Improper Restriction of Excessive Authentication Attempts](https://cwe.mitre.org/data/definitions/307.html)
+* [CWE-319: Cleartext Transmission of Sensitive Information](https://cwe.mitre.org/data/definitions/319.html)
+* [CWE-521: Weak Password Requirements](https://cwe.mitre.org/data/definitions/521.html)
 
 #### How could those sins be mitigated
-** Mitigations here **
+* Do not implement privilege escalation
+* Require better passwords (see CWE-521)
+* Securely encrypt passwords
+* Implement login attempt protection measures
 
 
 
@@ -752,16 +774,20 @@ bandit23@bandit:/tmp/test1254$ cat /tmp/badfile32
 ### Bandit 26
 
 #### Credentials
-** Credentials here **
+`bandit26:5czgV9L3Xx8JPOyRbXh6lQbmIOWvPT6Z `
 
 #### How you passed the challenge
-** Steps here **
+* Load the ssh key from bandit25 to login to bandit26
+* Shrink my terminal to make more pause on login
+* Press `v` to enter vi mode
+* Execute `:e /etc/bandit_pass/bandit26` to get credential
 
 #### What sins are evidenced in this challenge
-** Sins here **
+* [CWE-656: Reliance on Security Through Obscurity](https://cwe.mitre.org/data/definitions/656.html)
+* [CWE-829: Inclusion of Functionality from Untrusted Control Sphere](https://cwe.mitre.org/data/definitions/829.html)
 
 #### How could those sins be mitigated
-** Mitigations here **
+* Don't rely on an obscure shell to enforce security, use a restricted shell
 
 
 
@@ -769,16 +795,24 @@ bandit23@bandit:/tmp/test1254$ cat /tmp/badfile32
 ### Bandit 27
 
 #### Credentials
-** Credentials here **
+`bandit27:3ba3118a22e93127a4ed485be72ef5ea`
 
 #### How you passed the challenge
 ** Steps here **
+* While in vim-mode
+* `set shell=/bin/bash`
+* `:shell`
+* `./bandit27-do cat /etc/bandit_pass/bandit27`
 
 #### What sins are evidenced in this challenge
-** Sins here **
+* [CWE-272: Least Privilege Violation](https://cwe.mitre.org/data/definitions/272.html)
+* [CWE-313: Cleartext Storage in a File or on Disk](https://cwe.mitre.org/data/definitions/313.htm)
+* [CWE-829: Inclusion of Functionality from Untrusted Control Sphere](https://cwe.mitre.org/data/definitions/829.html)
 
 #### How could those sins be mitigated
-** Mitigations here **
+* Do not rely on an obscure shell to restrict access
+* Do not use the setuid bit unless absolutely necessary
+* Do not store passwords in cleartext
 
 
 
@@ -786,16 +820,24 @@ bandit23@bandit:/tmp/test1254$ cat /tmp/badfile32
 ### Bandit 28
 
 #### Credentials
-** Credentials here **
+`bandit28:0ef186ac70e04ea33b4c1853d2526fa2`
 
 #### How you passed the challenge
-** Steps here **
+```sh
+bandit27@bandit:/tmp$ mkdir b27git
+bandit27@bandit:/tmp$ cd !$
+cd b27git
+bandit27@bandit:/tmp/b27git$ git clone git@localhost:bandit27-git/repo
+bandit27@bandit:/tmp/b27git$ cd repo
+bandit27@bandit:/tmp/b27git/repo$ cat README 
+The password to the next level is: <password>
+```
 
 #### What sins are evidenced in this challenge
-** Sins here **
+* [CWE-312: Cleartext Storage of Sensitive Information](https://cwe.mitre.org/data/definitions/312.html)
 
 #### How could those sins be mitigated
-** Mitigations here **
+* Don't store sensitive information in version control
 
 
 
@@ -803,16 +845,24 @@ bandit23@bandit:/tmp/test1254$ cat /tmp/badfile32
 ### Bandit 29
 
 #### Credentials
-** Credentials here **
+`bandit29:bbc96594b4e001778eee9975372716b2`
 
 #### How you passed the challenge
-** Steps here **
+```sh
+bandit28@bandit:/tmp/b28test$ git clone bandit28-git@localhost:/home/bandit28-git/repo
+bandit28@bandit:/tmp/b28test/repo$ git log
+bandit28@bandit:/tmp/b28test/repo$ git checkout c086d11a00c0648d095d04c089786efef5e01264
+bandit28@bandit:/tmp/b28test/repo$ cat README.md
+...
+<password>
+...
+```
 
 #### What sins are evidenced in this challenge
-** Sins here **
+* [CWE-312: Cleartext Storage of Sensitive Information](https://cwe.mitre.org/data/definitions/312.html)
 
 #### How could those sins be mitigated
-** Mitigations here **
+* Don't store sensitive information in version control
 
 
 
@@ -820,16 +870,21 @@ bandit23@bandit:/tmp/test1254$ cat /tmp/badfile32
 ### Bandit 30
 
 #### Credentials
-** Credentials here **
+`bandit30:5b90576bedb2cc04c86a9e924ce42faf`
 
 #### How you passed the challenge
-** Steps here **
+```sh
+bandit29@bandit:/tmp/b29test$ git clone bandit29-git@localhost:/home/bandit29-git/repo
+bandit29@bandit:/tmp/b29test/repo$ git branch -a
+bandit29@bandit:/tmp/b29test/repo$ git checkout dev
+bandit29@bandit:/tmp/b29test/repo$ cat README.md 
+```
 
 #### What sins are evidenced in this challenge
-** Sins here **
+* [CWE-312: Cleartext Storage of Sensitive Information](https://cwe.mitre.org/data/definitions/312.html)
 
 #### How could those sins be mitigated
-** Mitigations here **
+* Don't store sensitive information in version control
 
 
 
@@ -837,16 +892,22 @@ bandit23@bandit:/tmp/test1254$ cat /tmp/badfile32
 ### Bandit 31
 
 #### Credentials
-** Credentials here **
+`bandit31:47e603bb428404d265f59c42920d81e5`
 
 #### How you passed the challenge
-** Steps here **
+```sh
+bandit30@bandit:/tmp/b30test$ git clone bandit30-git@localhost:/home/bandit30-git/repo
+...
+bandit30@bandit:/tmp/b30test/repo$ git tag
+secret
+bandit30@bandit:/tmp/b30test/repo$ git show secret
+```
 
 #### What sins are evidenced in this challenge
-** Sins here **
+* [CWE-312: Cleartext Storage of Sensitive Information](https://cwe.mitre.org/data/definitions/312.html)
 
 #### How could those sins be mitigated
-** Mitigations here **
+* Don't store sensitive information in version control
 
 
 
@@ -854,15 +915,31 @@ bandit23@bandit:/tmp/test1254$ cat /tmp/badfile32
 ### Bandit 32
 
 #### Credentials
-** Credentials here **
+`bandit32:56a9bf19c63d650ce78e6ec0354ee45e`
 
 #### How you passed the challenge
-** Steps here **
+```sh
+bandit31@bandit:/tmp/b31test$ git clone bandit31-git@localhost:/home/bandit31-git/repo
+Cloning into 'repo'...
+bandit31@bandit:/tmp/b31test/repo$ cat README.md 
+bandit31@bandit:/tmp/b31test/repo$ git rm .gitignore 
+rm '.gitignore'
+bandit31@bandit:/tmp/b31test/repo$ echo "May I come in?" > key.txt
+bandit31@bandit:/tmp/b31test/repo$ git branch
+* master
+bandit31@bandit:/tmp/b31test/repo$ git add key.txt 
+bandit31@bandit:/tmp/b31test/repo$ git commit -m 'dummy commit'
+...
+bandit31@bandit:/tmp/b31test/repo$ git push -u origin master
+...
+<password>
+...
+```
 
 #### What sins are evidenced in this challenge
-** Sins here **
+* [CWE-312: Cleartext Storage of Sensitive Information](https://cwe.mitre.org/data/definitions/312.html)
 
 #### How could those sins be mitigated
-** Mitigations here **
+* Don't store sensitive information in version control
 
 
