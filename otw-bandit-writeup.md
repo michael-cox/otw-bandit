@@ -2,8 +2,8 @@
 
 ## Student Information
 
-* Student name: **enter name here**
-* NetId: **enter NetId here**
+* Student name: Michael Cox
+* NetId: mcox59
 
 
 ## Project Description
